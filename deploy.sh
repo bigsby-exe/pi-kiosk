@@ -3,16 +3,26 @@
 SERVICE_URL="https://raw.githubusercontent.com/geerlingguy/pi-kiosk/refs/heads/master/kiosk.service"
 SCRIPT_URL="https://raw.githubusercontent.com/geerlingguy/pi-kiosk/refs/heads/master/kiosk.sh"
 SERVICE_PATH="/etc/systemd/system/kiosk.service"
-SCRIPT_PATH="/usr/local/bin/kiosk.sh"
-
-# Use current user and group
-USER=$(whoami)
-GROUP=$(id -gn)
 
 if [ "$(id -u)" != "0" ]; then
    echo "This script must be run as root" 1>&2
    exit 1
 fi
+
+# Prompt for user
+read -p "Enter the user to run the kiosk (default: pi): " USER
+USER=${USER:-pi}
+
+# Prompt for script path
+read -p "Enter the path to save kiosk.sh (default: /home/$USER/kiosk/kiosk.sh): " SCRIPT_PATH
+SCRIPT_PATH=${SCRIPT_PATH:-"/home/$USER/kiosk/kiosk.sh"}
+
+# Ensure the directory exists
+SCRIPT_DIR=$(dirname "$SCRIPT_PATH")
+mkdir -p "$SCRIPT_DIR"
+
+# Get the group of the user
+GROUP=$(id -gn "$USER")
 
 # Install necessary packages
 echo "Installing necessary packages..."
@@ -30,6 +40,9 @@ chmod +x "$SCRIPT_PATH"
 # Set the correct user and group in the service file
 sed -i "s/User=pi/User=$USER/g" "$SERVICE_PATH"
 sed -i "s/Group=pi/Group=$GROUP/g" "$SERVICE_PATH"
+
+# Update the ExecStart path in the service file
+sed -i "s|ExecStart=/usr/local/bin/kiosk.sh|ExecStart=$SCRIPT_PATH|g" "$SERVICE_PATH"
 
 # Reload systemd to recognize new service
 echo "Reloading systemd daemon..."
