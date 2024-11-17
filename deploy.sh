@@ -37,7 +37,8 @@ echo "Downloading kiosk script..."
 curl -o "$SCRIPT_PATH" "$SCRIPT_URL"
 chmod +x "$SCRIPT_PATH"
 
-# Set the correct user and group in the service file
+# Update the service file
+sed -i "s|ExecStart=/bin/bash /home/pi/kiosk/kiosk.sh|ExecStart=/bin/bash $SCRIPT_PATH|g" "$SERVICE_PATH"
 sed -i "s/User=pi/User=$USER/g" "$SERVICE_PATH"
 sed -i "s/Group=pi/Group=$GROUP/g" "$SERVICE_PATH"
 
