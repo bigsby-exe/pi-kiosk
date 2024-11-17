@@ -1,7 +1,7 @@
 #!/bin/bash
 
-SERVICE_URL="http://example.com/kiosk.service"
-SCRIPT_URL="http://example.com/kiosk.sh"
+SERVICE_URL="https://raw.githubusercontent.com/geerlingguy/pi-kiosk/refs/heads/master/kiosk.service"
+SCRIPT_URL="https://raw.githubusercontent.com/geerlingguy/pi-kiosk/refs/heads/master/kiosk.sh"
 SERVICE_PATH="/etc/systemd/system/kiosk.service"
 SCRIPT_PATH="/usr/local/bin/kiosk.sh"
 
