@@ -54,7 +54,7 @@ sudo systemctl start kiosk
 Deploy the kiosk application directly from the GitHub repository using this one-liner:
 
 ```bash
-curl -s https://raw.githubusercontent.com/yourusername/yourrepository/main/deploy.sh | sudo bash
+curl -s https://raw.githubusercontent.com/geerlingguy/pi-kiosk/refs/heads/master/deploy.sh | sudo bash
 
 Then modify the kiosk script at `/usr/local/bin/kiosk.sh` with your own HomeAssistant URL
 
