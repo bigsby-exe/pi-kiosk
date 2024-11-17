@@ -49,6 +49,15 @@ sudo systemctl enable kiosk.service
 sudo systemctl start kiosk
 ```
 
+## Quick Deploy
+
+Deploy the kiosk application directly from the GitHub repository using this one-liner:
+
+```bash
+curl -s https://raw.githubusercontent.com/yourusername/yourrepository/main/deploy.sh | sudo bash
+
+Then modify the kiosk script at `/usr/local/bin/kiosk.sh` with your own HomeAssistant URL
+
 ## Rotating the Screen
 
 To rotate the Touch Display immediately, you can run:
